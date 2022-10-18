@@ -1,0 +1,74 @@
+<idea-plugin>
+    <id>io.apimap.intellij</id>
+    <name>Apimap.io</name>
+    <vendor email="magnus.sulland@telenor.com"
+            url="http://apimap.io">
+        Apimap.io
+    </vendor>
+
+    <description>
+        <![CDATA[
+Apimap.io is a freestanding solution to keep track of all functionality a company
+provides through an API. It is a push based system, connected with your build pipeline or manually updated using our CLI.
+]]>
+    </description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+        <!-- Taxonomy -->
+        <fileType name="Apimap.io Taxonomy File"
+                  implementationClass="io.apimap.intellij.taxonomy.TaxonomyFileType"
+                  fieldName="INSTANCE"
+                  language="Apimap.io Taxonomy"
+                  fileNamesCaseInsensitive="taxonomy.apimap"/>
+
+        <annotator language="Apimap.io Taxonomy"
+                   implementationClass="io.apimap.intellij.taxonomy.TaxonomyAnnotator"/>
+
+        <lang.parserDefinition language="Apimap.io Taxonomy"
+                               implementationClass="io.apimap.intellij.taxonomy.TaxonomyParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="Apimap.io Taxonomy"
+                implementationClass="io.apimap.intellij.taxonomy.TaxonomySyntaxHighlighterFactory"/>
+
+        <!-- Metadata -->
+        <fileType name="Apimap.io Metadata File"
+                  implementationClass="io.apimap.intellij.metadata.MetadataFileType"
+                  fieldName="INSTANCE"
+                  language="Apimap.io Metadata"
+                  fileNamesCaseInsensitive="metadata.apimap"/>
+
+        <annotator language="Apimap.io Metadata"
+                   implementationClass="io.apimap.intellij.metadata.MetadataAnnotator"/>
+
+        <lang.parserDefinition language="Apimap.io Metadata"
+                               implementationClass="io.apimap.intellij.metadata.MetadataParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="Apimap.io Metadata"
+                implementationClass="io.apimap.intellij.metadata.MetadataSyntaxHighlighterFactory"/>
+
+        <completion.contributor
+                language="Apimap.io Metadata"
+                implementationClass="io.apimap.intellij.metadata.MetadataCompletionContributor"/>
+
+        <!-- Generic -->
+        <additionalTextAttributes
+                scheme="Default"
+                file="colorSchemes/ApimapDefault.xml"/>
+
+        <fileTemplateGroup implementation="io.apimap.intellij.ApimapFileTemplateGroupDescriptorFactory"/>
+    </extensions>
+
+    <actions>
+        <action id="Create.Apimap" class="io.apimap.intellij.ApimapCreateFileFromTemplateAction">
+            <add-to-group group-id="NewGroup"/>
+        </action>
+    </actions>
+
+</idea-plugin>

@@ -1,0 +1,100 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.13.3'
+    id 'org.jetbrains.grammarkit' version '2022.3.1'
+    id 'de.gliderpilot.semantic-release' version '1.4.2'
+    id 'com.github.spotbugs' version '5.0.14'
+    id 'maven-publish'
+}
+
+group 'io.apimap.intellij'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+}
+
+allprojects {
+    apply {
+        plugin("org.jetbrains.grammarkit")
+        plugin("org.jetbrains.intellij")
+    }
+}
+
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
+
+// Metadata
+task generateMetadataLexer(type: GenerateLexerTask) {
+    sourceFile.set(file('src/main/java/io/apimap/intellij/metadata/_ApimapMetadataLexer.flex'))
+    targetDir.set( 'src/gen/io/apimap/intellij/metadata/')
+    targetClass.set('_ApimapMetadataLexer')
+}
+
+task generateMetadataParser(type: GenerateParserTask) {
+    sourceFile.set(file('src/main/java/io/apimap/intellij/metadata/ApimapMetadata.bnf'))
+    group = "build"
+    targetRoot.set("src/gen/")
+    pathToParser.set("io/apimap/intellij/metadata/ApimapMetadataParser.java")
+    pathToPsiRoot.set("io/apimap/intellij")
+}
+
+// Taxonomy
+task generateTaxonomyLexer(type: GenerateLexerTask) {
+    sourceFile.set(file('src/main/java/io/apimap/intellij/taxonomy/_ApimapTaxonomyLexer.flex'))
+    targetDir.set( 'src/gen/io/apimap/intellij/taxonomy/')
+    targetClass.set('_ApimapTaxonomyLexer')
+}
+
+task generateTaxonomyParser(type: GenerateParserTask) {
+    sourceFile.set(file('src/main/java/io/apimap/intellij/taxonomy/ApimapTaxonomy.bnf'))
+    group = "build"
+    targetRoot.set("src/gen/")
+    pathToParser.set("io/apimap/intellij/taxonomy/ApimapTaxonomyParser.java")
+    pathToPsiRoot.set("io/apimap/intellij")
+}
+
+compileJava {
+    dependsOn generateMetadataLexer
+    dependsOn generateMetadataParser
+    dependsOn generateTaxonomyLexer
+    dependsOn generateTaxonomyParser
+}
+
+intellij {
+    version = '2022.3.3'
+}
+
+sourceSets {
+    main {
+        java {
+            java.srcDirs 'src', 'gen'
+        }
+    }
+}
+
+spotbugs {
+    excludeFilter.set(file("${rootDir}/spotbugs-exclude.xml"))
+}
+
+clean.doFirst {
+    delete "${rootDir}/src/gen"
+}
+
+jar{
+    archiveFileName = "apimap-intellij-plugin.jar"
+}
+
+semanticRelease {
+    releaseBranches {
+        include 'master'
+    }
+    repo {
+        releaseAsset jar
+        ghToken = System.getenv('GITHUB_TOKEN')
+    }
+}
+

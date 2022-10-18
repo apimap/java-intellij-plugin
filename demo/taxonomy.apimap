@@ -1,0 +1,9 @@
+{
+  "data": {
+    "classifications": [
+        "urn:apimap:10"
+    ],
+    "taxonomy": "apimap"
+  },
+  "api catalog version": "1"
+}

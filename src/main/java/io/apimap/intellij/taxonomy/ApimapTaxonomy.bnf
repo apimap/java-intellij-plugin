@@ -1,0 +1,48 @@
+{
+    parserClass="io.apimap.intellij.taxonomy.ApimapTaxonomyParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="ApimapTaxonomy"
+    psiImplClassSuffix="Impl"
+    psiPackage="io.apimap.intellij.taxonomy.psi"
+    psiImplPackage="io.apimap.intellij.taxonomy.psi.impl"
+
+    elementTypeHolderClass="io.apimap.intellij.taxonomy.psi.TaxonomyTypes"
+    elementTypeClass="io.apimap.intellij.taxonomy.psi.TaxonomyElementType"
+    tokenTypeClass="io.apimap.intellij.taxonomy.psi.TaxonomyTokenType"
+
+    tokens = [
+        LEFT_BRACE="{"
+        RIGHT_BRACE="}"
+        COLON=":"
+        COMMA=","
+        LEFT_BRACKET="["
+        RIGHT_BRACKET="]"
+        DOUBLE_QUOTE='"'
+        DATA_KEY='data'
+        VERSION_KEY='api catalog version'
+            
+        space='regexp:\s*'
+        urn='regexp:urn:([a-z0-9][a-z0-9-]{0,31}:[a-z0-9A-Z]{0,31})'
+        stringValue='regexp:([\w \\.]+)'
+    ]
+}
+
+FileContent ::= LEFT_BRACE Root RIGHT_BRACE
+Root ::= Content ( COMMA Content )*
+
+Content ::= ContentDataSection | ContentVersionSection
+private ContentDataSection ::= [whitespace] DOUBLE_QUOTE DATA_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] Data [whitespace]
+private ContentVersionSection ::= [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE ContentVersion DOUBLE_QUOTE [whitespace]
+ContentVersion ::= stringValue
+
+Data ::= [whitespace] LEFT_BRACE [!RIGHT_BRACE DataAttribute (!RIGHT_BRACE COMMA DataAttribute) *] RIGHT_BRACE
+DataAttribute ::= DOUBLE_QUOTE DataAttributeOption DOUBLE_QUOTE COLON DataAttributeValue
+
+DataAttributeOption ::= [whitespace] stringValue [whitespace]
+DataAttributeValue ::= [whitespace] ( TaxonomyIdentifier | Classifications ) [whitespace]
+Classifications ::= [whitespace] LEFT_BRACKET [!RIGHT_BRACKET [whitespace] DOUBLE_QUOTE urn DOUBLE_QUOTE (!RIGHT_BRACKET [whitespace] COMMA [whitespace] DOUBLE_QUOTE urn DOUBLE_QUOTE [whitespace]) *] [whitespace] RIGHT_BRACKET [whitespace]
+TaxonomyIdentifier ::= [whitespace] DOUBLE_QUOTE stringValue DOUBLE_QUOTE [whitespace]
+
+private whitespace ::= space
