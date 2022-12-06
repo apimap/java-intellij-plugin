@@ -1,0 +1,19 @@
+{
+  "data": {
+    "api version": "v1",
+    "architecture layer": "Backend",
+    "business unit": "HQ Office",
+    "description": "Hello World",
+    "documentation": [
+      "https://apimap.io",
+	  "https://github.com"
+    ],
+    "interface description language": "SDK",
+    "interface specification": "JAVA 11",
+    "name": "Apimap.io",
+    "system identifier": "API",
+    "release status": "In Production",
+    "visibility": "OSS"
+  },
+  "api catalog version": "1"
+}

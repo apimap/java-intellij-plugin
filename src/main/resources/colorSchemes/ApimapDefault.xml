@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<list>
+    <option name="VERSION_ID">
+        <value>
+            <option name="FOREGROUND" value="10c170ff"/>
+        </value>
+    </option>
+    <option name="VALUE">
+        <value>
+            <option name="FOREGROUND" value="5c5470ff"/>
+        </value>
+    </option>
+    <option name="NONE">
+        <value>
+            <option name="FOREGROUND" value="808b96ff"/>
+        </value>
+    </option>
+</list>
