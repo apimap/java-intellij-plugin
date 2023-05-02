@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ApimapMetadataContent extends PsiElement {
 
   @Nullable
+  ApimapMetadataContentVersion getContentVersion();
+
+  @Nullable
   ApimapMetadataData getData();
 
 }

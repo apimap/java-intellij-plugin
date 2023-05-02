@@ -27,4 +27,10 @@ public class ApimapMetadataMetadataOptionImpl extends ASTWrapperPsiElement imple
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getStringValue() {
+    return findNotNullChildByType(STRINGVALUE);
+  }
+
 }

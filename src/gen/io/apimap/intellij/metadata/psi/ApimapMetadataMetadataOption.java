@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApimapMetadataMetadataOption extends PsiElement {
 
+  @NotNull
+  PsiElement getStringValue();
+
 }

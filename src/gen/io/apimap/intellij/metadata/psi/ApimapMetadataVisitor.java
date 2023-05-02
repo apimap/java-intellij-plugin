@@ -4,11 +4,14 @@ package io.apimap.intellij.metadata.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
-import io.apimap.intellij.metadata.mixin.MetadataOptionElement;
 
 public class ApimapMetadataVisitor extends PsiElementVisitor {
 
   public void visitContent(@NotNull ApimapMetadataContent o) {
+    visitPsiElement(o);
+  }
+
+  public void visitContentVersion(@NotNull ApimapMetadataContentVersion o) {
     visitPsiElement(o);
   }
 
@@ -17,7 +20,7 @@ public class ApimapMetadataVisitor extends PsiElementVisitor {
   }
 
   public void visitDataAttribute(@NotNull ApimapMetadataDataAttribute o) {
-    visitMetadataOptionElement(o);
+    visitPsiElement(o);
   }
 
   public void visitMetadataOption(@NotNull ApimapMetadataMetadataOption o) {
@@ -34,10 +37,6 @@ public class ApimapMetadataVisitor extends PsiElementVisitor {
 
   public void visitRoot(@NotNull ApimapMetadataRoot o) {
     visitPsiElement(o);
-  }
-
-  public void visitMetadataOptionElement(@NotNull MetadataOptionElement o) {
-    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

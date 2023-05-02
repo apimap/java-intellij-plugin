@@ -9,6 +9,7 @@ import io.apimap.intellij.metadata.psi.impl.*;
 public interface MetadataTypes {
 
   IElementType CONTENT = new MetadataElementType("CONTENT");
+  IElementType CONTENT_VERSION = new MetadataElementType("CONTENT_VERSION");
   IElementType DATA = new MetadataElementType("DATA");
   IElementType DATA_ATTRIBUTE = new MetadataElementType("DATA_ATTRIBUTE");
   IElementType METADATA_OPTION = new MetadataElementType("METADATA_OPTION");
@@ -20,7 +21,6 @@ public interface MetadataTypes {
   IElementType COMMA = new MetadataTokenType(",");
   IElementType DATA_KEY = new MetadataTokenType("data");
   IElementType DOUBLE_QUOTE = new MetadataTokenType("\"");
-  IElementType IDENTIFIER = new MetadataTokenType("identifier");
   IElementType LEFT_BRACE = new MetadataTokenType("{");
   IElementType LEFT_BRACKET = new MetadataTokenType("[");
   IElementType RIGHT_BRACE = new MetadataTokenType("}");
@@ -28,7 +28,6 @@ public interface MetadataTypes {
   IElementType SPACE = new MetadataTokenType("space");
   IElementType STRINGVALUE = new MetadataTokenType("stringValue");
   IElementType URLVALUE = new MetadataTokenType("urlValue");
-  IElementType VERSIONID = new MetadataTokenType("1");
   IElementType VERSION_KEY = new MetadataTokenType("api catalog version");
 
   class Factory {
@@ -36,6 +35,9 @@ public interface MetadataTypes {
       IElementType type = node.getElementType();
       if (type == CONTENT) {
         return new ApimapMetadataContentImpl(node);
+      }
+      else if (type == CONTENT_VERSION) {
+        return new ApimapMetadataContentVersionImpl(node);
       }
       else if (type == DATA) {
         return new ApimapMetadataDataImpl(node);

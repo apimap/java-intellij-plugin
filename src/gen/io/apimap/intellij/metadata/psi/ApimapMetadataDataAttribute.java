@@ -4,9 +4,8 @@ package io.apimap.intellij.metadata.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import io.apimap.intellij.metadata.mixin.MetadataOptionElement;
 
-public interface ApimapMetadataDataAttribute extends MetadataOptionElement {
+public interface ApimapMetadataDataAttribute extends PsiElement {
 
   @NotNull
   ApimapMetadataMetadataOption getMetadataOption();

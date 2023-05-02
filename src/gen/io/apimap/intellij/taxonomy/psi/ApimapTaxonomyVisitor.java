@@ -15,6 +15,10 @@ public class ApimapTaxonomyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitContentVersion(@NotNull ApimapTaxonomyContentVersion o) {
+    visitPsiElement(o);
+  }
+
   public void visitData(@NotNull ApimapTaxonomyData o) {
     visitPsiElement(o);
   }

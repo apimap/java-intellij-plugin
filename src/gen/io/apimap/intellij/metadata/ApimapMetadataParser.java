@@ -95,7 +95,19 @@ public class ApimapMetadataParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE VERSIONID DOUBLE_QUOTE [whitespace]
+  // stringValue
+  public static boolean ContentVersion(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "ContentVersion")) return false;
+    if (!nextTokenIs(builder_, STRINGVALUE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, STRINGVALUE);
+    exit_section_(builder_, marker_, CONTENT_VERSION, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE ContentVersion DOUBLE_QUOTE [whitespace]
   static boolean ContentVersionSection(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ContentVersionSection")) return false;
     if (!nextTokenIs(builder_, "", DOUBLE_QUOTE, SPACE)) return false;
@@ -106,7 +118,9 @@ public class ApimapMetadataParser implements PsiParser, LightPsiParser {
     result_ = result_ && ContentVersionSection_4(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, COLON);
     result_ = result_ && ContentVersionSection_6(builder_, level_ + 1);
-    result_ = result_ && consumeTokens(builder_, 0, DOUBLE_QUOTE, VERSIONID, DOUBLE_QUOTE);
+    result_ = result_ && consumeToken(builder_, DOUBLE_QUOTE);
+    result_ = result_ && ContentVersion(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, DOUBLE_QUOTE);
     result_ = result_ && ContentVersionSection_10(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
@@ -225,21 +239,23 @@ public class ApimapMetadataParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MetadataOption COLON ( MetadataValue |  MetadataValueArray )
+  // DOUBLE_QUOTE MetadataOption DOUBLE_QUOTE COLON ( MetadataValue |  MetadataValueArray )
   public static boolean DataAttribute(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "DataAttribute")) return false;
+    if (!nextTokenIs(builder_, DOUBLE_QUOTE)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, DATA_ATTRIBUTE, "<data attribute>");
-    result_ = MetadataOption(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, COLON);
-    result_ = result_ && DataAttribute_2(builder_, level_ + 1);
-    exit_section_(builder_, level_, marker_, result_, false, null);
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DOUBLE_QUOTE);
+    result_ = result_ && MetadataOption(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, DOUBLE_QUOTE, COLON);
+    result_ = result_ && DataAttribute_4(builder_, level_ + 1);
+    exit_section_(builder_, marker_, DATA_ATTRIBUTE, result_);
     return result_;
   }
 
   // MetadataValue |  MetadataValueArray
-  private static boolean DataAttribute_2(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "DataAttribute_2")) return false;
+  private static boolean DataAttribute_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "DataAttribute_4")) return false;
     boolean result_;
     result_ = MetadataValue(builder_, level_ + 1);
     if (!result_) result_ = MetadataValueArray(builder_, level_ + 1);
@@ -261,23 +277,14 @@ public class ApimapMetadataParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [whitespace] ( '"name"'
-  //     | '"description"'
-  //     | '"visibility"'
-  //     | '"api version"'
-  //     | '"release status"'
-  //     | '"interface specification"'
-  //     | '"interface description language"'
-  //     | '"architecture layer"'
-  //     | '"business unit"'
-  //     | '"system identifier"'
-  //     | '"documentation"' )  [whitespace]
+  // [whitespace] stringValue [whitespace]
   public static boolean MetadataOption(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "MetadataOption")) return false;
+    if (!nextTokenIs(builder_, "<metadata option>", SPACE, STRINGVALUE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, METADATA_OPTION, "<metadata option>");
     result_ = MetadataOption_0(builder_, level_ + 1);
-    result_ = result_ && MetadataOption_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, STRINGVALUE);
     result_ = result_ && MetadataOption_2(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
@@ -288,34 +295,6 @@ public class ApimapMetadataParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "MetadataOption_0")) return false;
     whitespace(builder_, level_ + 1);
     return true;
-  }
-
-  // '"name"'
-  //     | '"description"'
-  //     | '"visibility"'
-  //     | '"api version"'
-  //     | '"release status"'
-  //     | '"interface specification"'
-  //     | '"interface description language"'
-  //     | '"architecture layer"'
-  //     | '"business unit"'
-  //     | '"system identifier"'
-  //     | '"documentation"'
-  private static boolean MetadataOption_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "MetadataOption_1")) return false;
-    boolean result_;
-    result_ = consumeToken(builder_, "\"name\"");
-    if (!result_) result_ = consumeToken(builder_, "\"description\"");
-    if (!result_) result_ = consumeToken(builder_, "\"visibility\"");
-    if (!result_) result_ = consumeToken(builder_, "\"api version\"");
-    if (!result_) result_ = consumeToken(builder_, "\"release status\"");
-    if (!result_) result_ = consumeToken(builder_, "\"interface specification\"");
-    if (!result_) result_ = consumeToken(builder_, "\"interface description language\"");
-    if (!result_) result_ = consumeToken(builder_, "\"architecture layer\"");
-    if (!result_) result_ = consumeToken(builder_, "\"business unit\"");
-    if (!result_) result_ = consumeToken(builder_, "\"system identifier\"");
-    if (!result_) result_ = consumeToken(builder_, "\"documentation\"");
-    return result_;
   }
 
   // [whitespace]
@@ -492,16 +471,37 @@ public class ApimapMetadataParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Content COMMA Content
+  // Content ( COMMA Content )*
   public static boolean Root(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Root")) return false;
     if (!nextTokenIs(builder_, "<root>", DOUBLE_QUOTE, SPACE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ROOT, "<root>");
     result_ = Content(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, COMMA);
-    result_ = result_ && Content(builder_, level_ + 1);
+    result_ = result_ && Root_1(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // ( COMMA Content )*
+  private static boolean Root_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Root_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!Root_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "Root_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA Content
+  private static boolean Root_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Root_1_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, COMMA);
+    result_ = result_ && Content(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

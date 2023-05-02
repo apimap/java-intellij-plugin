@@ -20,42 +20,27 @@
         LEFT_BRACKET="["
         RIGHT_BRACKET="]"
         DOUBLE_QUOTE='"'
-        VERSIONID="1"
         DATA_KEY='data'
         VERSION_KEY='api catalog version'
 
         space='regexp:\s*'
         urlValue='regexp:(https?://)([\w\.\-])+'
         stringValue='regexp:([\w \\.]+)'
-        identifier ='regexp:([\w-]+)'
     ]
 }
 
 FileContent ::= LEFT_BRACE Root RIGHT_BRACE
-Root ::= Content COMMA Content
+Root ::= Content ( COMMA Content )*
 
 Content ::= ContentDataSection | ContentVersionSection
 private ContentDataSection ::= [whitespace] DOUBLE_QUOTE DATA_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] Data [whitespace]
-private ContentVersionSection ::= [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE VERSIONID DOUBLE_QUOTE [whitespace]
+private ContentVersionSection ::= [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE ContentVersion DOUBLE_QUOTE [whitespace]
+ContentVersion ::= stringValue
 
 Data ::= [whitespace] LEFT_BRACE [!RIGHT_BRACE DataAttribute (!RIGHT_BRACE COMMA DataAttribute) *] RIGHT_BRACE
-DataAttribute ::= MetadataOption COLON ( MetadataValue |  MetadataValueArray ) {
-     mixin="io.apimap.intellij.metadata.mixin.MetadataOptionElementImpl"
-     implements="io.apimap.intellij.metadata.mixin.MetadataOptionElement"
-     methods=[]
-}
+DataAttribute ::= DOUBLE_QUOTE MetadataOption DOUBLE_QUOTE COLON ( MetadataValue |  MetadataValueArray )
 
-MetadataOption ::= [whitespace] ( '"name"'
-    | '"description"'
-    | '"visibility"'
-    | '"api version"'
-    | '"release status"'
-    | '"interface specification"'
-    | '"interface description language"'
-    | '"architecture layer"'
-    | '"business unit"'
-    | '"system identifier"'
-    | '"documentation"' )  [whitespace]
+MetadataOption ::= [whitespace] stringValue [whitespace]
 
 private Value ::= stringValue | urlValue
 MetadataValue ::= [whitespace] DOUBLE_QUOTE Value DOUBLE_QUOTE [whitespace]

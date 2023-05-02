@@ -1,4 +1,4 @@
-package main.grammars;
+package io.apimap.intellij.taxonomy;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
@@ -26,8 +26,8 @@ EOL=\R
 WHITE_SPACE=\s+
 
 SPACE=[ \t\n\x0B\f\r]*
-URN=urn:([\w-]+):([\w-]+)
-IDENTIFIER=([\w-]+)
+URN=urn:([a-z0-9][a-z0-9-]{0,31}:[a-z0-9A-Z]{0,31})
+STRINGVALUE=([\w \\.]+)
 
 %%
 <YYINITIAL> {
@@ -40,13 +40,12 @@ IDENTIFIER=([\w-]+)
   "["                        { return LEFT_BRACKET; }
   "]"                        { return RIGHT_BRACKET; }
   "\""                       { return DOUBLE_QUOTE; }
-  "1"                        { return VERSIONID; }
   "data"                     { return DATA_KEY; }
   "api catalog version"      { return VERSION_KEY; }
 
   {SPACE}                    { return SPACE; }
   {URN}                      { return URN; }
-  {IDENTIFIER}               { return IDENTIFIER; }
+  {STRINGVALUE}              { return STRINGVALUE; }
 
 }
 

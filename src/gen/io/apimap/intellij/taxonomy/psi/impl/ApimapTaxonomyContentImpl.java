@@ -29,6 +29,12 @@ public class ApimapTaxonomyContentImpl extends ASTWrapperPsiElement implements A
 
   @Override
   @Nullable
+  public ApimapTaxonomyContentVersion getContentVersion() {
+    return findChildByClass(ApimapTaxonomyContentVersion.class);
+  }
+
+  @Override
+  @Nullable
   public ApimapTaxonomyData getData() {
     return findChildByClass(ApimapTaxonomyData.class);
   }

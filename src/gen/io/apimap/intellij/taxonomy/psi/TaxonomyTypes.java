@@ -10,6 +10,7 @@ public interface TaxonomyTypes {
 
   IElementType CLASSIFICATIONS = new TaxonomyElementType("CLASSIFICATIONS");
   IElementType CONTENT = new TaxonomyElementType("CONTENT");
+  IElementType CONTENT_VERSION = new TaxonomyElementType("CONTENT_VERSION");
   IElementType DATA = new TaxonomyElementType("DATA");
   IElementType DATA_ATTRIBUTE = new TaxonomyElementType("DATA_ATTRIBUTE");
   IElementType DATA_ATTRIBUTE_OPTION = new TaxonomyElementType("DATA_ATTRIBUTE_OPTION");
@@ -21,14 +22,13 @@ public interface TaxonomyTypes {
   IElementType COMMA = new TaxonomyTokenType(",");
   IElementType DATA_KEY = new TaxonomyTokenType("data");
   IElementType DOUBLE_QUOTE = new TaxonomyTokenType("\"");
-  IElementType IDENTIFIER = new TaxonomyTokenType("identifier");
   IElementType LEFT_BRACE = new TaxonomyTokenType("{");
   IElementType LEFT_BRACKET = new TaxonomyTokenType("[");
   IElementType RIGHT_BRACE = new TaxonomyTokenType("}");
   IElementType RIGHT_BRACKET = new TaxonomyTokenType("]");
   IElementType SPACE = new TaxonomyTokenType("space");
+  IElementType STRINGVALUE = new TaxonomyTokenType("stringValue");
   IElementType URN = new TaxonomyTokenType("urn");
-  IElementType VERSIONID = new TaxonomyTokenType("1");
   IElementType VERSION_KEY = new TaxonomyTokenType("api catalog version");
 
   class Factory {
@@ -39,6 +39,9 @@ public interface TaxonomyTypes {
       }
       else if (type == CONTENT) {
         return new ApimapTaxonomyContentImpl(node);
+      }
+      else if (type == CONTENT_VERSION) {
+        return new ApimapTaxonomyContentVersionImpl(node);
       }
       else if (type == DATA) {
         return new ApimapTaxonomyDataImpl(node);

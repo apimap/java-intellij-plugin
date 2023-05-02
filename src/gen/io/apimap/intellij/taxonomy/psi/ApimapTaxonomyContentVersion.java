@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApimapTaxonomyContent extends PsiElement {
+public interface ApimapTaxonomyContentVersion extends PsiElement {
 
-  @Nullable
-  ApimapTaxonomyContentVersion getContentVersion();
-
-  @Nullable
-  ApimapTaxonomyData getData();
+  @NotNull
+  PsiElement getStringValue();
 
 }

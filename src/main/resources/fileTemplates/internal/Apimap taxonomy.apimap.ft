@@ -1,7 +1,7 @@
 {
-  "data": {
-    "classifications": [],
-    "taxonomy": "${Taxonomy_identifier}"
-  },
-  "api catalog version": "1"
+    "data": {
+        "classifications": [],
+        "taxonomy": "${Taxonomy_identifier}"
+    },
+    "api catalog version": "1"
 }

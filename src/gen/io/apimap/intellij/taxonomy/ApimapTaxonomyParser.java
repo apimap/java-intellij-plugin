@@ -227,7 +227,19 @@ public class ApimapTaxonomyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE VERSIONID DOUBLE_QUOTE [whitespace]
+  // stringValue
+  public static boolean ContentVersion(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "ContentVersion")) return false;
+    if (!nextTokenIs(builder_, STRINGVALUE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, STRINGVALUE);
+    exit_section_(builder_, marker_, CONTENT_VERSION, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // [whitespace] DOUBLE_QUOTE VERSION_KEY DOUBLE_QUOTE [whitespace] COLON [whitespace] DOUBLE_QUOTE ContentVersion DOUBLE_QUOTE [whitespace]
   static boolean ContentVersionSection(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ContentVersionSection")) return false;
     if (!nextTokenIs(builder_, "", DOUBLE_QUOTE, SPACE)) return false;
@@ -238,7 +250,9 @@ public class ApimapTaxonomyParser implements PsiParser, LightPsiParser {
     result_ = result_ && ContentVersionSection_4(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, COLON);
     result_ = result_ && ContentVersionSection_6(builder_, level_ + 1);
-    result_ = result_ && consumeTokens(builder_, 0, DOUBLE_QUOTE, VERSIONID, DOUBLE_QUOTE);
+    result_ = result_ && consumeToken(builder_, DOUBLE_QUOTE);
+    result_ = result_ && ContentVersion(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, DOUBLE_QUOTE);
     result_ = result_ && ContentVersionSection_10(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
@@ -357,26 +371,29 @@ public class ApimapTaxonomyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DataAttributeOption COLON DataAttributeValue
+  // DOUBLE_QUOTE DataAttributeOption DOUBLE_QUOTE COLON DataAttributeValue
   public static boolean DataAttribute(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "DataAttribute")) return false;
+    if (!nextTokenIs(builder_, DOUBLE_QUOTE)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, DATA_ATTRIBUTE, "<data attribute>");
-    result_ = DataAttributeOption(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, COLON);
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DOUBLE_QUOTE);
+    result_ = result_ && DataAttributeOption(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, DOUBLE_QUOTE, COLON);
     result_ = result_ && DataAttributeValue(builder_, level_ + 1);
-    exit_section_(builder_, level_, marker_, result_, false, null);
+    exit_section_(builder_, marker_, DATA_ATTRIBUTE, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // [whitespace] ('"classifications"' | '"taxonomy"') [whitespace]
+  // [whitespace] stringValue [whitespace]
   public static boolean DataAttributeOption(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "DataAttributeOption")) return false;
+    if (!nextTokenIs(builder_, "<data attribute option>", SPACE, STRINGVALUE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, DATA_ATTRIBUTE_OPTION, "<data attribute option>");
     result_ = DataAttributeOption_0(builder_, level_ + 1);
-    result_ = result_ && DataAttributeOption_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, STRINGVALUE);
     result_ = result_ && DataAttributeOption_2(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
@@ -387,15 +404,6 @@ public class ApimapTaxonomyParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "DataAttributeOption_0")) return false;
     whitespace(builder_, level_ + 1);
     return true;
-  }
-
-  // '"classifications"' | '"taxonomy"'
-  private static boolean DataAttributeOption_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "DataAttributeOption_1")) return false;
-    boolean result_;
-    result_ = consumeToken(builder_, "\"classifications\"");
-    if (!result_) result_ = consumeToken(builder_, "\"taxonomy\"");
-    return result_;
   }
 
   // [whitespace]
@@ -456,28 +464,49 @@ public class ApimapTaxonomyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Content COMMA Content
+  // Content ( COMMA Content )*
   public static boolean Root(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Root")) return false;
     if (!nextTokenIs(builder_, "<root>", DOUBLE_QUOTE, SPACE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ROOT, "<root>");
     result_ = Content(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, COMMA);
-    result_ = result_ && Content(builder_, level_ + 1);
+    result_ = result_ && Root_1(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
+  // ( COMMA Content )*
+  private static boolean Root_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Root_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!Root_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "Root_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA Content
+  private static boolean Root_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Root_1_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, COMMA);
+    result_ = result_ && Content(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
   /* ********************************************************** */
-  // [whitespace] DOUBLE_QUOTE identifier DOUBLE_QUOTE [whitespace]
+  // [whitespace] DOUBLE_QUOTE stringValue DOUBLE_QUOTE [whitespace]
   public static boolean TaxonomyIdentifier(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "TaxonomyIdentifier")) return false;
     if (!nextTokenIs(builder_, "<taxonomy identifier>", DOUBLE_QUOTE, SPACE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, TAXONOMY_IDENTIFIER, "<taxonomy identifier>");
     result_ = TaxonomyIdentifier_0(builder_, level_ + 1);
-    result_ = result_ && consumeTokens(builder_, 0, DOUBLE_QUOTE, IDENTIFIER, DOUBLE_QUOTE);
+    result_ = result_ && consumeTokens(builder_, 0, DOUBLE_QUOTE, STRINGVALUE, DOUBLE_QUOTE);
     result_ = result_ && TaxonomyIdentifier_4(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;

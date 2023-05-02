@@ -29,6 +29,12 @@ public class ApimapMetadataContentImpl extends ASTWrapperPsiElement implements A
 
   @Override
   @Nullable
+  public ApimapMetadataContentVersion getContentVersion() {
+    return findChildByClass(ApimapMetadataContentVersion.class);
+  }
+
+  @Override
+  @Nullable
   public ApimapMetadataData getData() {
     return findChildByClass(ApimapMetadataData.class);
   }

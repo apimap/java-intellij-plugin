@@ -1,4 +1,4 @@
-package main.grammars;
+package io.apimap.intellij.metadata;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
@@ -26,9 +26,8 @@ EOL=\R
 WHITE_SPACE=\s+
 
 SPACE=[ \t\n\x0B\f\r]*
-URLVALUE=(https?:\/\/)([\w\.\-])+
+URLVALUE=(https?:"//")([\w\.\-])+
 STRINGVALUE=([\w \\.]+)
-IDENTIFIER=([\w-]+)
 
 %%
 <YYINITIAL> {
@@ -41,14 +40,12 @@ IDENTIFIER=([\w-]+)
   "["                        { return LEFT_BRACKET; }
   "]"                        { return RIGHT_BRACKET; }
   "\""                       { return DOUBLE_QUOTE; }
-  "1"                        { return VERSIONID; }
   "data"                     { return DATA_KEY; }
   "api catalog version"      { return VERSION_KEY; }
 
   {SPACE}                    { return SPACE; }
   {URLVALUE}                 { return URLVALUE; }
   {STRINGVALUE}              { return STRINGVALUE; }
-  {IDENTIFIER}               { return IDENTIFIER; }
 
 }
 

@@ -1,23 +1,19 @@
-
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.9.0'
-    id 'org.jetbrains.grammarkit' version '2021.2.2'
+    id 'org.jetbrains.intellij' version '1.13.3'
+    id 'org.jetbrains.grammarkit' version '2022.3.1'
+    id 'de.gliderpilot.semantic-release' version '1.4.2'
+    id 'com.github.spotbugs' version '5.0.13'
 }
 
 group 'io.apimap.intellij'
-version '0.1'
 
 repositories {
     mavenCentral()
 }
 
-tasks.withType(JavaCompile) {
-    options.release = 11
-}
-
 dependencies {
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
 }
 
 allprojects {
@@ -32,13 +28,13 @@ import org.jetbrains.grammarkit.tasks.GenerateParserTask
 
 // Metadata
 task generateMetadataLexer(type: GenerateLexerTask) {
-    source.set('src/main/grammars/ApimapMetadata.flex')
+    sourceFile.set(file('src/main/java/io/apimap/intellij/metadata/_ApimapMetadataLexer.flex'))
     targetDir.set( 'src/gen/io/apimap/intellij/metadata/')
-    targetClass.set('ApimapMetadataFlexLexer')
+    targetClass.set('_ApimapMetadataLexer')
 }
 
 task generateMetadataParser(type: GenerateParserTask) {
-    source.set('src/main/grammars/ApimapMetadata.bnf')
+    sourceFile.set(file('src/main/java/io/apimap/intellij/metadata/ApimapMetadata.bnf'))
     group = "build"
     targetRoot.set("src/gen/")
     pathToParser.set("io/apimap/intellij/metadata/ApimapMetadataParser.java")
@@ -47,13 +43,13 @@ task generateMetadataParser(type: GenerateParserTask) {
 
 // Taxonomy
 task generateTaxonomyLexer(type: GenerateLexerTask) {
-    source.set('src/main/grammars/ApimapTaxonomy.flex')
+    sourceFile.set(file('src/main/java/io/apimap/intellij/taxonomy/_ApimapTaxonomyLexer.flex'))
     targetDir.set( 'src/gen/io/apimap/intellij/taxonomy/')
-    targetClass.set('ApimapTaxonomyFlexLexer')
+    targetClass.set('_ApimapTaxonomyLexer')
 }
 
 task generateTaxonomyParser(type: GenerateParserTask) {
-    source.set('src/main/grammars/ApimapTaxonomy.bnf')
+    sourceFile.set(file('src/main/java/io/apimap/intellij/taxonomy/ApimapTaxonomy.bnf'))
     group = "build"
     targetRoot.set("src/gen/")
     pathToParser.set("io/apimap/intellij/taxonomy/ApimapTaxonomyParser.java")
@@ -68,13 +64,19 @@ compileJava {
 }
 
 intellij {
-    version = '2022.1.1'
+    version = '2022.3.3'
 }
 
 sourceSets {
     main {
-        java.srcDirs 'src', 'gen'
+        java {
+            java.srcDirs 'src', 'gen'
+        }
     }
+}
+
+spotbugs {
+    excludeFilter.set(file("${rootDir}/spotbugs-exclude.xml"))
 }
 
 clean.doFirst {

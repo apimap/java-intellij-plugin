@@ -1,4 +1,4 @@
-Apimap.io API
+Apimap.io IntelliJ Plugin
 ===
 
 🎉 **Welcome** 🎉
@@ -27,49 +27,23 @@ ___
 This is a complete software solution consisting of a collection of freestanding components. Use only the components you 
 find useful, create the rest to custom fit your organization.
 
+**Core**
 - A **Developer Portal** with wizards and implementation information
 - A **Discovery Portal** to display APIs and filter search results
 - An **API** to accommodate all the information
-- A **Jenkins plugin** to automate information parsing and upload
+- An **Orchestra API** to manage accounts and resource access
 - A **CLI** to enable manual information uploads
+
+**Plugins**
+- A **GitHub Action** to automate information parsing and upload
+- A **Jenkins plugin** to automate information parsing and upload
+- An **IntelliJ plugin** to make it easier to write metadata and taxonomy files
 
 ## Run
 ___
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/apimap)](https://artifacthub.io/packages/search?repo=apimap)
 
-We primarily recommend the following two ways of running the applications:
-- Locally using bootRun
-- From our published Docker image
+This plugin must be installed from the IntelliJ marketplace.
 
-### Locally using bootRun
-
-Based on Spring Boot, all the usual targets exist. The easiest way to get started is using **bootRun** 
-
-> gradlew bootRun
-
-#### From our published Docker image
-
-It is possible to use the image "as-is", although this will NOT keep any content after shutdown/reboot.
-
-> docker run -p 8080:8080 apimap/api
-
-#### Requirements
-
-Each node need a persistent storage volume to keep data between restarts. Default location is '/var/apimap'
-
-```shell script
-docker volume create apimap-data
-```
-
-#### Configuring the Docker Image
-
-We love "build once deploy anywhere" and all configuration is done using the Spring configuration properties system.
-
-You can find our default configuration in the application.yaml file, and we recommend that you override using environment variables.
-More information about Spring and the configuration system is available at [docs.spring.io](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config)
-
-Setting faq and support urls using **JSON Application Properties**
-> docker run -p 8080:8080 --env SPRING_APPLICATION_JSON='{"apimap":{"metadata":{"copyright": "your organization", "faq":"your url", "support":"your url"}}}' apimap/api
 
 ## Contributing
 ___

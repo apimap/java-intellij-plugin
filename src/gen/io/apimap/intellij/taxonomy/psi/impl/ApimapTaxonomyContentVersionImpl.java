@@ -11,14 +11,14 @@ import static io.apimap.intellij.taxonomy.psi.TaxonomyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.apimap.intellij.taxonomy.psi.*;
 
-public class ApimapTaxonomyTaxonomyIdentifierImpl extends ASTWrapperPsiElement implements ApimapTaxonomyTaxonomyIdentifier {
+public class ApimapTaxonomyContentVersionImpl extends ASTWrapperPsiElement implements ApimapTaxonomyContentVersion {
 
-  public ApimapTaxonomyTaxonomyIdentifierImpl(@NotNull ASTNode node) {
+  public ApimapTaxonomyContentVersionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApimapTaxonomyVisitor visitor) {
-    visitor.visitTaxonomyIdentifier(this);
+    visitor.visitContentVersion(this);
   }
 
   @Override

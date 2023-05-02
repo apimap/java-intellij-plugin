@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.apimap.intellij.metadata.psi.MetadataTypes.*;
-import io.apimap.intellij.metadata.mixin.MetadataOptionElementImpl;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.apimap.intellij.metadata.psi.*;
 
-public class ApimapMetadataDataAttributeImpl extends MetadataOptionElementImpl implements ApimapMetadataDataAttribute {
+public class ApimapMetadataDataAttributeImpl extends ASTWrapperPsiElement implements ApimapMetadataDataAttribute {
 
-  public ApimapMetadataDataAttributeImpl(ASTNode node) {
+  public ApimapMetadataDataAttributeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
