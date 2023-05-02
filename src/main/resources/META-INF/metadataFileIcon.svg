@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:cc="http://creativecommons.org/ns#"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        viewBox="0 0 15.999999 16"
+        version="1.1"
+        id="svg3859"
+        sodipodi:docname="metadataFileIcon.svg"
+        width="16"
+        height="16"
+        inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+        xmlns="http://www.w3.org/2000/svg">
+    <metadata
+            id="metadata3863">
+        <rdf:RDF>
+            <cc:Work
+                    rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type
+                        rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+                <dc:title>Asset 3</dc:title>
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <sodipodi:namedview
+            pagecolor="#ffffff"
+            bordercolor="#666666"
+            borderopacity="1"
+            objecttolerance="10"
+            gridtolerance="10"
+            guidetolerance="10"
+            inkscape:pageopacity="0"
+            inkscape:pageshadow="2"
+            inkscape:window-width="2134"
+            inkscape:window-height="1243"
+            id="namedview3861"
+            showgrid="false"
+            inkscape:zoom="34.633652"
+            inkscape:cx="8.7487164"
+            inkscape:cy="7.0018605"
+            inkscape:window-x="1508"
+            inkscape:window-y="25"
+            inkscape:window-maximized="0"
+            inkscape:current-layer="svg3859"
+            inkscape:snap-path-mask="false"
+            inkscape:snap-path-clip="false"
+            inkscape:showpageshadow="2"
+            inkscape:pagecheckerboard="0"
+            inkscape:deskcolor="#d1d1d1"/>
+    <defs
+            id="defs3851">
+        <style
+                id="style3849">.cls-1{fill:#01acfb;}
+        </style>
+    </defs>
+    <title
+            id="title3853">Asset 3
+    </title>
+    <circle
+            style="fill:#5c5470;stroke:none;stroke-width:0.780003;fill-opacity:1"
+            id="path326"
+            cx="8"
+            cy="8"
+            r="7.4813776"/>
+    <path
+            d="M 13.878264,5.4738159 H 9.0672791 c -0.59737,0 -1.078296,0.4809261 -1.078296,1.0782961 v 1.6642242 c 0,0.59737 0.480926,1.078296 1.078296,1.078296 h 4.8109849 c 0.59737,0 0.769729,-0.566782 1.078296,-1.078296 L 15.495701,7.322617 14.95656,6.5521551 C 14.61407,6.0627053 14.475649,5.4738591 13.878264,5.4738591 Z"
+            fill="#f2f2f2"
+            id="path537"
+            style="stroke:#4d4d4d;stroke-width:0.332011;stroke-linecap:round"/>
+    <path
+            d="m 6.8207632,15.517 0,-12.3622888 c 0,-0.5973699 0.480926,-1.078296 1.078296,-1.078296 0.59737,0 1.078296,0.4809261 1.078296,1.078296 l 0,12.3622888"
+            fill="#ffffff"
+            id="path539"
+            style="stroke:#4d4d4d;stroke-width:0.332011;stroke-linecap:round"
+            sodipodi:nodetypes="csssc"/>
+    <path
+            d="m 2.1217517,3.6941683 h 4.8109851 c 0.59737,0 1.078296,0.480926 1.078296,1.078296 v 1.6642243 c 0,0.5973699 -0.480926,1.078296 -1.078296,1.078296 H 2.1217517 c -0.59737,0 -0.7697289,-0.5667821 -1.078296,-1.078296 L 0.50430047,5.5429694 1.0434557,4.7725074 c 0.3424898,-0.4894354 0.480926,-1.078296 1.078296,-1.078296 z"
+            fill="#f9f9f9"
+            id="path541"
+            style="stroke:#4d4d4d;stroke-width:0.332011;stroke-linecap:round"/>
+    <path
+            d="M 8.5186227,3.1370312 V 13.923585"
+            fill="#2c5aa0"
+            id="path543"
+            style="stroke:#4d4d4d;stroke-width:0.332011;stroke-linecap:round"/>
+</svg>
